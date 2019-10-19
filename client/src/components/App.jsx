@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import config from '../config';
 
+const interactiveCanvas = window.interactiveCanvas;
+
 const Container = styled.div`
   background-color: #55C501;
   min-height: 100vh;
@@ -36,6 +38,11 @@ const TagList = ({ tags }) => tags.map(elm => <p>{elm.id}</p>);
 
 const App = () => {
   const [tags, setTags] = useState([]);
+  interactiveCanvas.ready({
+    onUpdate(data) {
+      fetchTags(setTags);
+    }
+  });
   return (
     <Container>
       <TagList tags={tags} />
