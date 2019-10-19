@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
+import config from '../config';
 
 const Container = styled.div`
-  font-color: #282c34;
   background-color: #55C501;
   min-height: 100vh;
   display: flex;
@@ -21,10 +21,10 @@ const Button = styled.button`
 `;
 
 const fetchTags = async setTags => {
-  const uri = `https://qiita.com/api/v2/users/hitsuji-haneta/following_tags`;
+  const uri = `https://qiita.com/api/v2/users/${config.userId}/following_tags`;
   const res = await fetch(uri, {
     headers: {
-      Authorization: 'Bearer ba345cb906f722da9a1300d31a47c7434be7a5d8'
+      Authorization: `Bearer ${config.token}`
     }
   });
   const resJson = await res.json();
