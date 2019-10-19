@@ -40,7 +40,7 @@ const App = () => {
   const [tags, setTags] = useState([]);
   interactiveCanvas.ready({
     onUpdate(data) {
-      fetchTags(setTags);
+      if(data.type === 'tags') fetchTags(setTags);
     }
   });
   return (
