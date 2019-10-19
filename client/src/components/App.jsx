@@ -1,16 +1,18 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import config from '../config';
+import TagCard from './TagCard';
 
 const interactiveCanvas = window.interactiveCanvas;
 
 const Container = styled.div`
-  background-color: #55C501;
+  background-color: #55c501;
   min-height: 100vh;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
   justify-content: center;
+  flex-wrap: wrap;
   font-size: calc(14px + 2vmin);
   color: white;
 `;
@@ -34,13 +36,21 @@ const fetchTags = async setTags => {
   setTags(resJson);
 };
 
-const TagList = ({ tags }) => tags.map(elm => <p>{elm.id}</p>);
+const TagList = ({ tags }) =>
+  tags.map((elm, idx) => (
+    <TagCard
+      id={elm.id}
+      number={idx + 1}
+      itemsCount={elm.items_count}
+      iconUrl={elm.icon_url}
+    />
+  ));
 
 const App = () => {
   const [tags, setTags] = useState([]);
   interactiveCanvas.ready({
     onUpdate(data) {
-      if(data.type === 'tags') fetchTags(setTags);
+      if (data.type === 'tags') fetchTags(setTags);
     }
   });
   return (
@@ -49,6 +59,6 @@ const App = () => {
       <Button onClick={() => fetchTags(setTags)}>qiita</Button>
     </Container>
   );
-}
+};
 
 export default App;
