@@ -9,7 +9,6 @@ const Container = styled.div`
   flex-direction: row;
   margin: 20px 20px;
 `;
-
 const TextWrapper = styled.div`
   display: flex;
   flex-direction: column;
@@ -17,7 +16,6 @@ const TextWrapper = styled.div`
   justify-content: center;
   width: 100%;
 `;
-
 const MainText = styled.p`
   font-size: 1em;
   margin: 0;
@@ -25,7 +23,7 @@ const MainText = styled.p`
   text-align: center;
 `;
 const SubText = styled.p`
-  font-size: 0.5em;
+  font-size: 0.7em;
   margin-right: 10px;
   color: black;
   text-align: center;
@@ -35,12 +33,12 @@ const Image = styled.img`
   height: 40px;
 `;
 
-const TagCard = ({ id, number, itemsCount, iconUrl }) => (
-  <Container>
+const TagCard = ({ tagId, number, itemsCount, iconUrl, onClick }) => (
+  <Container onClick={() => onClick(tagId)}>
     <Image src={iconUrl}/>
     <TextWrapper>
       <SubText>No. {number}</SubText>
-      <MainText>{id}</MainText>
+      <MainText>{tagId}</MainText>
       <SubText>{itemsCount} items</SubText>
     </TextWrapper>
   </Container>

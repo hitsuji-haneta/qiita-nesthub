@@ -14,13 +14,26 @@ app.intent('welcome', conv => {
   );
 });
 
-app.intent('tags', conv => {
-  conv.ask('タグを取得しました');
+app.intent('tagList', conv => {
+  conv.ask('タグを選択してください');
   conv.ask(
     new HtmlResponse({
       url: 'https://qiita-nesthub.web.app/',
       data: {
-        type: 'tags'
+        type: 'tagList'
+      }
+    })
+  );
+});
+
+app.intent('get articles', (conv, { tagId }) => {
+  conv.ask(`${id}の記事を取得します。`);
+  conv.ask(
+    new HtmlResponse({
+      url: 'https://qiita-nesthub.web.app/',
+      data: {
+        type: 'articles',
+        tagId
       }
     })
   );
