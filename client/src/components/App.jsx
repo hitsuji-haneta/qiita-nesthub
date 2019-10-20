@@ -36,21 +36,27 @@ const fetchTags = async setTags => {
   setTags(resJson);
 };
 
-const fetchArticles = async tagId => {
+const fetchArticles = async (tagId, setArticle, setTags) => {
   const uri = `https://qiita.com//api/v2/tags/${tagId}/items?page=1&per_page=5`;
   const res = await fetch(uri, {
+    mode: "cors",
     headers: {
       Authorization: `Bearer ${config.token}`
     }
   });
+  console.log(res);
   const resJson = await res.json();
   console.log(resJson);
-  // setTags(resJson);
+  setTags([]);
+  setArticle(resJson);
 };
 
 const clickTag = tagId => {
   console.log(tagId);
-  interactiveCanvas.sendTextQuery(`${tagId}の記事を取得`);
+  // interactiveCanvas.sendTextQuery(`${tagId}の記事を取得`);
+  const setArticle = input => console.log(input);
+  const setTags = input => console.log(input);
+  fetchArticles(tagId, setArticle, setTags);
 };
 const TagList = ({ tags }) =>
   tags.map((elm, idx) => (
@@ -68,17 +74,25 @@ const TagButton = ({ tags, setTags }) => {
   return <Button onClick={() => fetchTags(setTags)}>タグ</Button>;
 };
 
+const ArticleList = ({ article }) => {
+  if (!article) return <></>;
+  return <p>{article}</p>;
+};
+
 const App = () => {
   const [tags, setTags] = useState([]);
+  const [article, setArticle] = useState();
   interactiveCanvas.ready({
     onUpdate(data) {
       if (data.type === 'tagList') fetchTags(setTags);
-      if (data.type === 'articles') fetchArticles(data.tagId);
+      if (data.type === 'articles')
+        fetchArticles(data.tagId, setArticle, setTags);
     }
   });
   return (
     <Container>
       <TagList tags={tags} />
+      <ArticleList article={article} />
       <TagButton tags={tags} setTags={setTags} />
     </Container>
   );

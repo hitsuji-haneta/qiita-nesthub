@@ -27,7 +27,7 @@ app.intent('tagList', conv => {
 });
 
 app.intent('get articles', (conv, { tagId }) => {
-  conv.ask(`${id}の記事を取得します。`);
+  conv.ask(`${tagId}の記事を取得します。`);
   conv.ask(
     new HtmlResponse({
       url: 'https://qiita-nesthub.web.app/',
